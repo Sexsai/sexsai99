@@ -1,0 +1,21 @@
+name:skipo site 1
+
+on:
+  push:
+    branches: [readme-edits]
+  pull_request:
+    branches: [readme-edits]
+
+jobs: football
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the site in the sexsai/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/skipo -v ${{ github.workspace }}/_site:/srv/sexsai/_site \
+        Sexsai/builder:latest /bin/bash -c "chmod -R 777 /srv/sexsai && sexsai build --future"
